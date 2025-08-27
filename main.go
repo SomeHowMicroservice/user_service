@@ -22,9 +22,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Lỗi kết nối DB ở User Service: %v", err)
 	}
+	defer db.Close()
 
 	grpcServer := grpc.NewServer()
-	userContainer := container.NewContainer(db, grpcServer)
+	userContainer := container.NewContainer(db.Gorm, grpcServer)
 	userpb.RegisterUserServiceServer(grpcServer, userContainer.GRPCHandler)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.App.GRPCPort))
@@ -35,6 +36,6 @@ func main() {
 
 	log.Println("Khởi chạy service thành công")
 	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("Kết nối tới phục vụ thất bại: %v", err)
+		log.Fatalf("Serve gRPC thất bại: %v", err)
 	}
 }
