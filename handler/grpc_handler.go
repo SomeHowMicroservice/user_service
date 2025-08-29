@@ -72,7 +72,7 @@ func (h *GRPCHandler) GetUserByUsername(ctx context.Context, req *userpb.GetUser
 	return toUserResponse(user), nil
 }
 
-func (h *GRPCHandler) GetUserPublicById(ctx context.Context, req *userpb.GetUserByIdRequest) (*userpb.UserPublicResponse, error) {
+func (h *GRPCHandler) GetUserPublicById(ctx context.Context, req *userpb.GetOneRequest) (*userpb.UserPublicResponse, error) {
 	user, err := h.svc.GetUserByID(ctx, req.Id)
 	if err != nil {
 		switch err {
@@ -100,7 +100,7 @@ func (h *GRPCHandler) GetUserPublicByEmail(ctx context.Context, req *userpb.GetU
 	return toUserPublicResponse(user), nil
 }
 
-func (h *GRPCHandler) GetUserById(ctx context.Context, req *userpb.GetUserByIdRequest) (*userpb.UserResponse, error) {
+func (h *GRPCHandler) GetUserById(ctx context.Context, req *userpb.GetOneRequest) (*userpb.UserResponse, error) {
 	user, err := h.svc.GetUserByID(ctx, req.Id)
 	if err != nil {
 		switch err {
@@ -143,7 +143,7 @@ func (h *GRPCHandler) UpdateProfile(ctx context.Context, req *userpb.UpdateProfi
 	return toUserPublicResponse(user), nil
 }
 
-func (h *GRPCHandler) GetAddressesByUserId(ctx context.Context, req *userpb.GetAddressesByUserIdRequest) (*userpb.AddressesResponse, error) {
+func (h *GRPCHandler) GetAddressesByUserId(ctx context.Context, req *userpb.GetByUserIdRequest) (*userpb.AddressesResponse, error) {
 	addresses, err := h.svc.GetAddressesByUserID(ctx, req.UserId)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
@@ -151,7 +151,7 @@ func (h *GRPCHandler) GetAddressesByUserId(ctx context.Context, req *userpb.GetA
 	return toAddressesResponse(addresses), nil
 }
 
-func (h *GRPCHandler) GetMeasurementByUserId(ctx context.Context, req *userpb.GetMeasurementByUserIdRequest) (*userpb.MeasurementResponse, error) {
+func (h *GRPCHandler) GetMeasurementByUserId(ctx context.Context, req *userpb.GetByUserIdRequest) (*userpb.MeasurementResponse, error) {
 	measurement, err := h.svc.GetMeasurementByUserID(ctx, req.UserId)
 	if err != nil {
 		switch err {
@@ -212,7 +212,7 @@ func (h *GRPCHandler) UpdateAddress(ctx context.Context, req *userpb.UpdateAddre
 	return toAddressResponse(address), nil
 }
 
-func (h *GRPCHandler) DeleteAddress(ctx context.Context, req *userpb.DeleteAddressRequest) (*userpb.AddressDeletedResponse, error) {
+func (h *GRPCHandler) DeleteAddress(ctx context.Context, req *userpb.DeleteAddressRequest) (*userpb.DeletedResponse, error) {
 	if err := h.svc.DeleteAddress(ctx, req); err != nil {
 		switch err {
 		case common.ErrAddressNotFound:
@@ -224,12 +224,12 @@ func (h *GRPCHandler) DeleteAddress(ctx context.Context, req *userpb.DeleteAddre
 		}
 	}
 
-	return &userpb.AddressDeletedResponse{
+	return &userpb.DeletedResponse{
 		Success: true,
 	}, nil
 }
 
-func (h *GRPCHandler) GetUsersById(ctx context.Context, req *userpb.GetUsersByIdRequest) (*userpb.UsersPublicResponse, error) {
+func (h *GRPCHandler) GetUsersById(ctx context.Context, req *userpb.GetManyRequest) (*userpb.UsersPublicResponse, error) {
 	users, err := h.svc.GetUsersByID(ctx, req.Ids)
 	if err != nil {
 		switch err {
