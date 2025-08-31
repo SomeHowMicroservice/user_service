@@ -6,10 +6,8 @@ import (
 	"net"
 
 	"github.com/SomeHowMicroservice/shm-be/user/config"
-	"github.com/SomeHowMicroservice/shm-be/user/container"
 	"github.com/SomeHowMicroservice/shm-be/user/initialization"
-	userpb "github.com/SomeHowMicroservice/shm-be/user/protobuf/user"
-	"google.golang.org/grpc"
+	"github.com/SomeHowMicroservice/shm-be/user/server"
 )
 
 func main() {
@@ -24,18 +22,16 @@ func main() {
 	}
 	defer db.Close()
 
-	grpcServer := grpc.NewServer()
-	userContainer := container.NewContainer(db.Gorm, grpcServer)
-	userpb.RegisterUserServiceServer(grpcServer, userContainer.GRPCHandler)
-
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.App.GRPCPort))
 	if err != nil {
 		log.Fatalf("Không thể lắng nghe: %v", err)
 	}
 	defer lis.Close()
 
+	grpcServer := server.NewGRPCServer(db.Gorm)
+
 	log.Println("Khởi chạy service thành công")
 	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("Serve gRPC thất bại: %v", err)
+		log.Fatalf("Chạy gRPC server thất bại: %v", err)
 	}
 }
