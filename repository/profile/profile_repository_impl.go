@@ -17,7 +17,7 @@ func NewProfileRepository(db *gorm.DB) ProfileRepository {
 	return &profileRepositoryImpl{db}
 }
 
-func (r *profileRepositoryImpl) Update(ctx context.Context, id string, updateData map[string]interface{}) error {
+func (r *profileRepositoryImpl) Update(ctx context.Context, id string, updateData map[string]any) error {
 	result := r.db.WithContext(ctx).Model(&model.Profile{}).Where("id = ?", id).Updates(updateData)
 	if result.Error != nil {
 		return result.Error

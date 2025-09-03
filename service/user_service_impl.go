@@ -134,7 +134,7 @@ func (s *userServiceImpl) UpdateUserPassword(ctx context.Context, req *userpb.Up
 }
 
 func (s *userServiceImpl) UpdateProfile(ctx context.Context, req *userpb.UpdateProfileRequest) (*model.User, error) {
-	updateData := map[string]interface{}{}
+	updateData := map[string]any{}
 	if req.FirstName != "" {
 		updateData["first_name"] = req.FirstName
 	}
@@ -197,7 +197,7 @@ func (s *userServiceImpl) UpdateMeasurement(ctx context.Context, req *userpb.Upd
 		return nil, common.ErrForbidden
 	}
 
-	updateData := map[string]interface{}{}
+	updateData := map[string]any{}
 	if req.Height != 0 {
 		updateData["height"] = req.Height
 	}
@@ -273,7 +273,7 @@ func (s *userServiceImpl) CreateAddress(ctx context.Context, req *userpb.CreateA
 
 		for _, addr := range addresses {
 			if addr.ID != address.ID && addr.IsDefault {
-				if err := s.addressRepo.Update(ctx, addr.ID, map[string]interface{}{"is_default": false}); err != nil {
+				if err := s.addressRepo.Update(ctx, addr.ID, map[string]any{"is_default": false}); err != nil {
 					return nil, fmt.Errorf("cập nhật địa chỉ mặc định thất bại: %w", err)
 				}
 			}
@@ -301,7 +301,7 @@ func (s *userServiceImpl) UpdateAddress(ctx context.Context, req *userpb.UpdateA
 		return nil, fmt.Errorf("đếm địa chỉ thất bại: %w", err)
 	}
 
-	updateData := map[string]interface{}{}
+	updateData := map[string]any{}
 	if req.FullName != address.FullName {
 		updateData["full_name"] = req.FullName
 	}
@@ -328,7 +328,7 @@ func (s *userServiceImpl) UpdateAddress(ctx context.Context, req *userpb.UpdateA
 					return nil, fmt.Errorf("tìm địa chỉ người dùng thất bại: %w", err)
 				}
 
-				if err = s.addressRepo.Update(ctx, addresses[1].ID, map[string]interface{}{"is_default": true}); err != nil {
+				if err = s.addressRepo.Update(ctx, addresses[1].ID, map[string]any{"is_default": true}); err != nil {
 					return nil, fmt.Errorf("không thể cập nhật địa chỉ %w", err)
 				}
 			}
@@ -340,7 +340,7 @@ func (s *userServiceImpl) UpdateAddress(ctx context.Context, req *userpb.UpdateA
 
 			for _, addr := range addresses {
 				if addr.ID != address.ID {
-					if err := s.addressRepo.Update(ctx, addr.ID, map[string]interface{}{"is_default": false}); err != nil {
+					if err := s.addressRepo.Update(ctx, addr.ID, map[string]any{"is_default": false}); err != nil {
 						return nil, fmt.Errorf("cập nhật địa chỉ mặc định thất bại: %w", err)
 					}
 				}
@@ -396,7 +396,7 @@ func (s *userServiceImpl) DeleteAddress(ctx context.Context, req *userpb.DeleteA
 		}
 
 		if len(addresses) >= 1 {
-			if err := s.addressRepo.Update(ctx, addresses[0].ID, map[string]interface{}{"is_default": true}); err != nil {
+			if err := s.addressRepo.Update(ctx, addresses[0].ID, map[string]any{"is_default": true}); err != nil {
 				return fmt.Errorf("cập nhật địa chỉ mặc định thất bại: %w", err)
 			}
 		}

@@ -9,7 +9,7 @@ import (
 type AddressRepository interface {
 	Create(ctx context.Context, address *model.Address) error
 
-	Update(ctx context.Context, id string, updateData map[string]interface{}) error
+	Update(ctx context.Context, id string, updateData map[string]any) error
 
 	FindByID(ctx context.Context, id string) (*model.Address, error)
 

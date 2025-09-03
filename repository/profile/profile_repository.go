@@ -7,7 +7,7 @@ import (
 )
 
 type ProfileRepository interface {
-	Update(ctx context.Context, id string, updateData map[string]interface{}) error
+	Update(ctx context.Context, id string, updateData map[string]any) error
 
 	FindByID(ctx context.Context, id string) (*model.Profile, error)
 }
