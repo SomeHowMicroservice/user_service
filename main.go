@@ -1,12 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"log"
-	"net"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/SomeHowMicroservice/shm-be/user/config"
-	"github.com/SomeHowMicroservice/shm-be/user/initialization"
 	"github.com/SomeHowMicroservice/shm-be/user/server"
 )
 
@@ -16,22 +18,24 @@ func main() {
 		log.Fatalf("Tải cấu hình User Service thất bại: %v", err)
 	}
 
-	db, err := initialization.InitDB(cfg)
+	server, err := server.NewServer(cfg)
 	if err != nil {
-		log.Fatalf("Lỗi kết nối DB ở User Service: %v", err)
+		log.Fatalf("Khởi tạo service thất bại: %v", err)
 	}
-	defer db.Close()
 
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.App.GRPCPort))
-	if err != nil {
-		log.Fatalf("Không thể lắng nghe: %v", err)
-	}
-	defer lis.Close()
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 
-	grpcServer := server.NewGRPCServer(db.Gorm)
+	go func() {
+		if err := server.Start(); err != nil {
+			log.Fatalf("Chạy service thất bại: %v", err)
+		}
+	}()
 
-	log.Println("Khởi chạy service thành công")
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("Chạy gRPC server thất bại: %v", err)
-	}
+	log.Println("Chạy service thành công")
+
+	<-stop
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	server.Shutdown(ctx)
 }
