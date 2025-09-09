@@ -28,8 +28,5 @@ func (r *roleRepositoryImpl) FindByName(ctx context.Context, name string) (*mode
 }
 
 func (r *roleRepositoryImpl) CreateUserRoles(ctx context.Context, userID string, roleID string) error {
-	if err := r.db.WithContext(ctx).Exec(`INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)`, userID, roleID).Error; err != nil {
-		return err
-	}
-	return nil
+	return r.db.WithContext(ctx).Exec(`INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)`, userID, roleID).Error
 }

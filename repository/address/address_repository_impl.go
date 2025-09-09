@@ -18,11 +18,7 @@ func NewAddressRepository(db *gorm.DB) AddressRepository {
 }
 
 func (r *addressRepositoryImpl) Create(ctx context.Context, address *model.Address) error {
-	if err := r.db.WithContext(ctx).Create(address).Error; err != nil {
-		return err
-	}
-
-	return nil
+	return r.db.WithContext(ctx).Create(address).Error
 }
 
 func (r *addressRepositoryImpl) Update(ctx context.Context, id string, updateData map[string]any) error {

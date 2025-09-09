@@ -18,10 +18,7 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 }
 
 func (r *userRepositoryImpl) Create(ctx context.Context, user *model.User) error {
-	if err := r.db.WithContext(ctx).Create(user).Error; err != nil {
-		return err
-	}
-	return nil
+	return r.db.WithContext(ctx).Create(user).Error
 }
 
 func (r *userRepositoryImpl) ExistsByEmail(ctx context.Context, email string) (bool, error) {
