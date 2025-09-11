@@ -229,7 +229,7 @@ func (h *GRPCHandler) DeleteAddress(ctx context.Context, req *userpb.DeleteAddre
 	}, nil
 }
 
-func (h *GRPCHandler) GetUsersById(ctx context.Context, req *userpb.GetManyRequest) (*userpb.UsersPublicResponse, error) {
+func (h *GRPCHandler) GetUsersPublicById(ctx context.Context, req *userpb.GetManyRequest) (*userpb.UsersPublicResponse, error) {
 	users, err := h.svc.GetUsersByID(ctx, req.Ids)
 	if err != nil {
 		switch err {
