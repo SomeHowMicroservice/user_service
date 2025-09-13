@@ -11,6 +11,8 @@ type UserRepository interface {
 
 	ExistsByUsername(ctx context.Context, username string) (bool, error)
 
+	ExistsById(ctx context.Context, id string) (bool, error)
+
 	ExistsByEmail(ctx context.Context, email string) (bool, error)
 
 	FindByUsernameWithProfileAndRoles(ctx context.Context, username string) (*model.User, error)

@@ -22,8 +22,8 @@ func NewGRPCHandler(grpcServer *grpc.Server, svc service.UserService) *GRPCHandl
 	return &GRPCHandler{svc: svc}
 }
 
-func (h *GRPCHandler) CheckEmailExists(ctx context.Context, req *userpb.CheckEmailExistsRequest) (*userpb.CheckedResponse, error) {
-	exists, err := h.svc.CheckEmailExists(ctx, req.Email)
+func (h *GRPCHandler) CheckUserExistsById(ctx context.Context, req *userpb.CheckUserExistsByIdRequest) (*userpb.CheckedResponse, error) {
+	exists, err := h.svc.CheckUserExistsByID(ctx, req.Id)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -33,8 +33,19 @@ func (h *GRPCHandler) CheckEmailExists(ctx context.Context, req *userpb.CheckEma
 	}, nil
 }
 
-func (h *GRPCHandler) CheckUsernameExists(ctx context.Context, req *userpb.CheckUsernameExistsRequest) (*userpb.CheckedResponse, error) {
-	exists, err := h.svc.CheckUsernameExists(ctx, req.Username)
+func (h *GRPCHandler) CheckUserExistsByEmail(ctx context.Context, req *userpb.CheckUserExistsByEmailRequest) (*userpb.CheckedResponse, error) {
+	exists, err := h.svc.CheckUserExistsByEmail(ctx, req.Email)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &userpb.CheckedResponse{
+		Exists: exists,
+	}, nil
+}
+
+func (h *GRPCHandler) CheckUserExistsByUsername(ctx context.Context, req *userpb.CheckUserExistsByUsernameRequest) (*userpb.CheckedResponse, error) {
+	exists, err := h.svc.CheckUserExistsByUsername(ctx, req.Username)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

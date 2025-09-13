@@ -17,6 +17,15 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 	return &userRepositoryImpl{db}
 }
 
+func (r *userRepositoryImpl) ExistsById(ctx context.Context, id string) (bool, error) {
+	var count int64
+	if err := r.db.WithContext(ctx).Model(&model.User{}).Where("id = ?", id).Count(&count).Error; err != nil {
+		return false, nil
+	}
+
+	return count > 0, nil
+}
+
 func (r *userRepositoryImpl) Create(ctx context.Context, user *model.User) error {
 	return r.db.WithContext(ctx).Create(user).Error
 }
@@ -26,6 +35,7 @@ func (r *userRepositoryImpl) ExistsByEmail(ctx context.Context, email string) (b
 	if err := r.db.WithContext(ctx).Model(&model.User{}).Where("email = ?", email).Count(&count).Error; err != nil {
 		return false, nil
 	}
+
 	return count > 0, nil
 }
 
@@ -34,6 +44,7 @@ func (r *userRepositoryImpl) ExistsByUsername(ctx context.Context, username stri
 	if err := r.db.WithContext(ctx).Model(&model.User{}).Where("username = ?", username).Count(&count).Error; err != nil {
 		return false, nil
 	}
+
 	return count > 0, nil
 }
 

@@ -35,38 +35,51 @@ func NewUserService(userRepo userRepo.UserRepository, roleRepo roleRepo.RoleRepo
 	}
 }
 
-func (s *userServiceImpl) CheckEmailExists(ctx context.Context, email string) (bool, error) {
+func (s *userServiceImpl) CheckUserExistsByEmail(ctx context.Context, email string) (bool, error) {
 	exists, err := s.userRepo.ExistsByEmail(ctx, email)
 	if err != nil {
 		return false, fmt.Errorf("kiểm tra email thất bại: %w", err)
 	}
+
 	return exists, nil
 }
 
-func (s *userServiceImpl) CheckUsernameExists(ctx context.Context, username string) (bool, error) {
+func (s *userServiceImpl) CheckUserExistsByUsername(ctx context.Context, username string) (bool, error) {
 	exists, err := s.userRepo.ExistsByUsername(ctx, username)
 	if err != nil {
 		return false, fmt.Errorf("kiểm tra username thất bại: %w", err)
 	}
+
+	return exists, nil
+}
+
+func (s *userServiceImpl) CheckUserExistsByID(ctx context.Context, id string) (bool, error) {
+	exists, err := s.userRepo.ExistsById(ctx, id)
+	if err != nil {
+		return false, fmt.Errorf("kiểm tra username thất bại: %w", err)
+	}
+
 	return exists, nil
 }
 
 func (s *userServiceImpl) CreateUser(ctx context.Context, req *userpb.CreateUserRequest) (*model.User, error) {
-	userID := uuid.NewString();
+	userID := uuid.NewString()
+
 	user := &model.User{
 		ID:       uuid.NewString(),
 		Username: req.Username,
 		Email:    req.Email,
 		Password: req.Password,
 		Profile: &model.Profile{
-			ID: uuid.NewString(),
+			ID:     uuid.NewString(),
 			UserID: userID,
 		},
 		Measurement: &model.Measurement{
-			ID: uuid.NewString(),
+			ID:     uuid.NewString(),
 			UserID: userID,
 		},
 	}
+	
 	if err := s.userRepo.Create(ctx, user); err != nil {
 		return nil, fmt.Errorf("tạo người dùng thất bại: %w", err)
 	}
