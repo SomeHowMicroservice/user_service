@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	common "github.com/SomeHowMicroservice/shm-be/user/common"
-	"github.com/SomeHowMicroservice/shm-be/user/model"
+	common "github.com/SomeHowMicroservice/user/common"
+	"github.com/SomeHowMicroservice/user/model"
 	"gorm.io/gorm"
 )
 

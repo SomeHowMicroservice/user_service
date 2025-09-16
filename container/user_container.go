@@ -1,13 +1,13 @@
 package container
 
 import (
-	"github.com/SomeHowMicroservice/shm-be/user/handler"
-	addressRepo "github.com/SomeHowMicroservice/shm-be/user/repository/address"
-	measurementRepo "github.com/SomeHowMicroservice/shm-be/user/repository/measurement"
-	profileRepo "github.com/SomeHowMicroservice/shm-be/user/repository/profile"
-	roleRepo "github.com/SomeHowMicroservice/shm-be/user/repository/role"
-	userRepo "github.com/SomeHowMicroservice/shm-be/user/repository/user"
-	"github.com/SomeHowMicroservice/shm-be/user/service"
+	"github.com/SomeHowMicroservice/user/handler"
+	addressRepo "github.com/SomeHowMicroservice/user/repository/address"
+	measurementRepo "github.com/SomeHowMicroservice/user/repository/measurement"
+	profileRepo "github.com/SomeHowMicroservice/user/repository/profile"
+	roleRepo "github.com/SomeHowMicroservice/user/repository/role"
+	userRepo "github.com/SomeHowMicroservice/user/repository/user"
+	"github.com/SomeHowMicroservice/user/service"
 	"google.golang.org/grpc"
 	"gorm.io/gorm"
 )

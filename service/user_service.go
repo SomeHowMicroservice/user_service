@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/SomeHowMicroservice/shm-be/user/model"
-	userpb "github.com/SomeHowMicroservice/shm-be/user/protobuf/user"
+	"github.com/SomeHowMicroservice/user/model"
+	userpb "github.com/SomeHowMicroservice/user/protobuf/user"
 )
 
 type UserService interface {

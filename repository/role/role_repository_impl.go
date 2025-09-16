@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/SomeHowMicroservice/shm-be/user/model"
+	"github.com/SomeHowMicroservice/user/model"
 	"gorm.io/gorm"
 )
 

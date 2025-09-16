@@ -1,4 +1,4 @@
-module github.com/SomeHowMicroservice/shm-be/user
+module github.com/SomeHowMicroservice/user
 
 go 1.23.4
 

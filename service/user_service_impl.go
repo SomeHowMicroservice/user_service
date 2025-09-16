@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/SomeHowMicroservice/shm-be/user/common"
-	"github.com/SomeHowMicroservice/shm-be/user/model"
-	userpb "github.com/SomeHowMicroservice/shm-be/user/protobuf/user"
-	addressRepo "github.com/SomeHowMicroservice/shm-be/user/repository/address"
-	measurementRepo "github.com/SomeHowMicroservice/shm-be/user/repository/measurement"
-	profileRepo "github.com/SomeHowMicroservice/shm-be/user/repository/profile"
-	roleRepo "github.com/SomeHowMicroservice/shm-be/user/repository/role"
-	userRepo "github.com/SomeHowMicroservice/shm-be/user/repository/user"
+	"github.com/SomeHowMicroservice/user/common"
+	"github.com/SomeHowMicroservice/user/model"
+	userpb "github.com/SomeHowMicroservice/user/protobuf/user"
+	addressRepo "github.com/SomeHowMicroservice/user/repository/address"
+	measurementRepo "github.com/SomeHowMicroservice/user/repository/measurement"
+	profileRepo "github.com/SomeHowMicroservice/user/repository/profile"
+	roleRepo "github.com/SomeHowMicroservice/user/repository/role"
+	userRepo "github.com/SomeHowMicroservice/user/repository/user"
 	"github.com/google/uuid"
 )
 

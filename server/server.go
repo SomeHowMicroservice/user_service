@@ -6,8 +6,8 @@ import (
 	"log"
 	"net"
 
-	"github.com/SomeHowMicroservice/shm-be/user/config"
-	"github.com/SomeHowMicroservice/shm-be/user/initialization"
+	"github.com/SomeHowMicroservice/user/config"
+	"github.com/SomeHowMicroservice/user/initialization"
 	"google.golang.org/grpc"
 )
 

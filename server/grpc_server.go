@@ -3,8 +3,8 @@ package server
 import (
 	"time"
 
-	"github.com/SomeHowMicroservice/shm-be/user/container"
-	userpb "github.com/SomeHowMicroservice/shm-be/user/protobuf/user"
+	"github.com/SomeHowMicroservice/user/container"
+	userpb "github.com/SomeHowMicroservice/user/protobuf/user"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 	"gorm.io/gorm"

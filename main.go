@@ -8,8 +8,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/SomeHowMicroservice/shm-be/user/config"
-	"github.com/SomeHowMicroservice/shm-be/user/server"
+	"github.com/SomeHowMicroservice/user/config"
+	"github.com/SomeHowMicroservice/user/server"
 )
 
 func main() {

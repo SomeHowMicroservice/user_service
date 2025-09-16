@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/SomeHowMicroservice/shm-be/user/model"
+	"github.com/SomeHowMicroservice/user/model"
 )
 
 type MeasurementRepository interface {
