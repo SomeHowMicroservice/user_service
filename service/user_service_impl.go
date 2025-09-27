@@ -137,7 +137,7 @@ func (s *userServiceImpl) GetUserByEmail(ctx context.Context, email string) (*mo
 }
 
 func (s *userServiceImpl) UpdateUserPassword(ctx context.Context, req *userpb.UpdateUserPasswordRequest) error {
-	if err := s.userRepo.UpdatePassword(ctx, req.Id, req.NewPassword); err != nil {
+	if err := s.userRepo.Update(ctx, req.Id, map[string]any{"password": req.NewPassword}); err != nil {
 		if errors.Is(err, common.ErrUserNotFound) {
 			return err
 		}

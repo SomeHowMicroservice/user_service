@@ -84,8 +84,8 @@ func (r *userRepositoryImpl) FindByIDWithProfileAndRoles(ctx context.Context, id
 	return &user, nil
 }
 
-func (r *userRepositoryImpl) UpdatePassword(ctx context.Context, id, password string) error {
-	result := r.db.WithContext(ctx).Model(&model.User{}).Where("id = ?", id).Update("password", password)
+func (r *userRepositoryImpl) Update(ctx context.Context, id string, updateData map[string]any) error {
+	result := r.db.WithContext(ctx).Model(&model.User{}).Where("id = ?", id).Updates(updateData)
 	if result.Error != nil {
 		return result.Error
 	}
